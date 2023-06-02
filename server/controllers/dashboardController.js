@@ -8,3 +8,11 @@ res.render('dashboard/index', {
   layout: '../views/layouts/dashboard'
 });
 };
+
+exports.about = async(req, res) =>{
+  const locals = {
+      title: 'About - App Notas',
+      description: 'Guarda Tus Notas'
+  }
+res.render('about', locals);
+};
