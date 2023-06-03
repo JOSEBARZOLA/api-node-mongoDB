@@ -3,7 +3,7 @@ const express = require('express');
 const expressLayouts = require ('express-ejs-layouts');
 const app = express();
 const path = require('path');
-
+const connectDB = require('./server/config/db');
 const port = 5000 || process.env.PORT;
 
 
@@ -11,7 +11,8 @@ const port = 5000 || process.env.PORT;
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-
+//connect database
+connectDB();
 //static files
 app.use(express.static('public'));
 
