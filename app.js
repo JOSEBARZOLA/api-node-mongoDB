@@ -17,6 +17,7 @@ saveUninitialized: true,
 Store: MongoStore.create,
 mongoURL: process.env.MONGODB_URI
 }));
+
 //middlewares
 app.use(passport.initialize());
 app.use(passport.session());
