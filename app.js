@@ -10,25 +10,24 @@ const MongoStore = require('connect-mongo');
 const port = 5000 || process.env.PORT;
 const bodyParser = require('body-parser');
 
-
 app.use(session({
 secret:'ejemplo prueba',
 resave: false,
 saveUninitialized: true,
 Store: MongoStore.create,
-mongoURL: process.env.MONGO_DB
-
+mongoURL: process.env.MONGODB_URI
 }));
 //middlewares
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
-
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 //connect database
 connectDB();
+passport.authenticate();
+
 //static files
 app.use(express.static('public'));
 

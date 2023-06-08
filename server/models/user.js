@@ -6,19 +6,11 @@ googleId:{
     type: String,
     required: true
 },
-displayName:{
-    type: String,
-    required: true
-},
 firstName:{
     type: String,
     required: true
 },
 lastName:{
-    type: String,
-    required: true
-},
-profileImage:{
     type: String,
     required: true
 },
@@ -28,4 +20,4 @@ createdAt:{
 },
 });
 
-module.exports = mongoose.model('user', UserSchema);
+module.exports = mongoose.model('User', UserSchema);

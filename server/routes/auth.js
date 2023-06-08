@@ -15,24 +15,21 @@ passport.use(new GoogleStrategy({
 
     const newUser ={
       googleId: profile.id,
-      displayName: profile.displayName,
       firstName: profile.name.givenName,
       lastName: profile.name.familyName,
-image: profile.photos[0].value
     }
 
     try {
-      const user = await User.FindOne({ googleId: profile.id });
+      const user = await User.findOne({ googleId: profile.id });
 if(user){
 done(null, user);
 }else{
-  user = await user.create (newUser);
+  user = await User.create (newUser);
   done(null, user);
 }
-
-    } catch (error) {
-      console.log(err);
-    }
+} catch (error) {
+      console.log(error);
+}
 }
 ));
 //google login route
@@ -49,19 +46,34 @@ successRedirect: '/dashboard'
 //ruta si algo sale mal
 router.get('/login-failure', (req, res)=> {
     res.send('Algo salio mal')
+});
+
+router.get('/logout', (req, res) => {
+req.session.destroy(error =>{
+if(error){
+  console.log(error);
+  res.send('Error al salir');
+} else{
+  res.redirect('/');
+}
 })
+});
+
+
 
 //data after successful authentication
 passport.serializeUser(function(user, done){
     done(null, user.id);
 })
 //recupera los datos del usuario 
-passport.deserializeUser(function(id, done){
-        User.findById(id, function(err, user){
-            done(err, user);
-        })
-
-})
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
+});
 
 
 module.exports = router;
