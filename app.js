@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const expressLayouts = require ('express-ejs-layouts');
+const methodOverride = require("method-override");
 const app = express();
 const path = require('path');
 const connectDB = require('./server/config/db');
@@ -14,8 +15,7 @@ app.use(session({
 secret:'ejemplo prueba',
 resave: false,
 saveUninitialized: true,
-Store: MongoStore.create,
-mongoURL: process.env.MONGODB_URI
+Store: MongoStore.create({mongoUrl: process.env.MONGODB_URI})
 }));
 
 //middlewares
@@ -24,7 +24,7 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-
+app.use(methodOverride("_method"));
 //connect database
 connectDB();
 passport.authenticate();
