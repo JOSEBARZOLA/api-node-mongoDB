@@ -27,7 +27,7 @@ app.use(express.json());
 app.use(methodOverride("_method"));
 //connect database
 connectDB();
-passport.authenticate();
+
 
 //static files
 app.use(express.static('public'));
