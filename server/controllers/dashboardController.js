@@ -10,9 +10,9 @@ exports.dashboard = async (req, res) => {
     title: 'dashboard',
     description: 'Guarda Tus Notas'
   }
-
+ 
   try {
-    // Mongoose "^7.0.0 Update
+    // Mongoose
     const notes = await Note.aggregate([
       { $sort: { updatedAt: -1 } },
       { $match: { user: new mongoose.Types.ObjectId(req.user.id) } },
